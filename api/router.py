@@ -26,8 +26,8 @@ class Router(object):
     self._import_views()
     self._add_routes()
 
-    for rule in self.app.url_map.iter_rules():
-      print rule, rule.defaults, rule.arguments, rule.endpoint
+    # for rule in self.app.url_map.iter_rules():
+      # print rule, rule.defaults, rule.arguments, rule.endpoint
 
   def _get_names_from_files(self, files_path, file_name_pattern):
     all_files = os.listdir(files_path)
@@ -59,7 +59,8 @@ class Router(object):
     return model_name.lower().capitalize()
 
   def _import_models(self):
-    model_names = self._get_names_from_files(self.views_path, "\.py$")
+    model_names = self._get_names_from_files(self.models_path, "\.py$")
+    print model_names
 
     models = {model_name: model_name.lower().capitalize() for model_name in model_names}
 

@@ -1,9 +1,7 @@
 ﻿# book.py
 
-class Book(object):
-  def __init__(self, title, id):
-      self.title = title
-      self.id = id
+from api import db
 
-  def __str__(self):
-    return "Book(id=%d, title='%s')" % (self.id, self.title)
+class Book(db.Model):
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  title = db.Column(db.String(64), nullable=False)

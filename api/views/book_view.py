@@ -1,20 +1,13 @@
-﻿from flask.ext.classy import FlaskView
-#from flask.ext.restful import Resource
+﻿from api_view import ApiView
+
 from book import Book
 
-class BookView(FlaskView):
-  def __init__(self):
-    self.books = {
-      4: Book("Head First Design Patterns", 4),
-      6: Book("Advanced Qt programming", 6),
-      13: Book("Computer graphics", 13)
-    }
-
+class BookView(ApiView):
   def get(self, id):
     id = int(id)
-    if not id in self.books.keys():
-      return "Book with id %d not found." % id, 404
 
-    book = self.books[id]
-    print "book is %s" % book
-    return book.title, 200
+    book = Book.query.get(id)
+    if not book:
+      return render_error("Book with id %d was not found." % id, 404)
+
+    return render_object(book)

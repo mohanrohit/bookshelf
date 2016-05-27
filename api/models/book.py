@@ -3,5 +3,7 @@
 from api import db
 
 class Book(db.Model):
-  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  title = db.Column(db.String(64), nullable=False)
+  __tablename__ = "books"
+
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
+  title = db.Column(db.String(64), nullable=False, unique=True)

@@ -8,6 +8,6 @@ class BookView(ApiView):
 
     book = Book.query.get(id)
     if not book:
-      return render_error("Book with id %d was not found." % id, 404)
+      return self.render_error("Book with id %d was not found." % id, 404)
 
-    return render_object(book)
+    return self.render_object(book)

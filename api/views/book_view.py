@@ -4,6 +4,7 @@ from book import Book
 
 class BookView(ApiView):
   def get(self, id):
+    print self.params
     id = int(id)
 
     book = Book.query.get(id)

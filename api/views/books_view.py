@@ -1,16 +1,21 @@
-﻿from flask.ext.classy import FlaskView
-#from flask.ext.restful import Resource
+﻿from api_view import ApiView
+
 from book import Book
 
-class BooksView(FlaskView):
-  def __init__(self):
-    self.books = {
-      4: Book(id=4, title="Head First Design Patterns"),
-      6: Book(id=6, title="Advanced Qt programming"),
-      13: Book(id=13, title="Computer graphics")
-    }
-
+class BooksView(ApiView):
   def get(self):
-    books = ["book %d: %s" % (k, v) for k, v in self.books.items()]
+    books = Books.query.all()
 
-    return str(books), 200
+    return self.render_object(books)
+
+  def post(self):
+    for k, v in self.params.items():
+      print k, v
+    title = self.params["title"]
+    if title is None:
+      return self.render_error("Title is required.", 400)
+
+    new_book = Book(title=title)
+    new_book.save()
+
+    return self.render_object(new_book)
